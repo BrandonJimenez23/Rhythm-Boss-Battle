@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Activator
+  - MissBarrier
+  - LeftActivator
+  - RightActivator
+  - UpActivator
+  - DownActivator
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: background
+    uniqueID: 3359043911
+    locked: 0
+  - name: Player
+    uniqueID: 2720072521
+    locked: 0
+  - name: Buttons
+    uniqueID: 3369368021
+    locked: 0
+  - name: Arrows
+    uniqueID: 37195491
+    locked: 0
+  - name: LongBloc
+    uniqueID: 4141280941
+    locked: 0
