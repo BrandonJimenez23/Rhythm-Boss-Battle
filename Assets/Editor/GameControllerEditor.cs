@@ -13,13 +13,13 @@ public class GameControllerEditor : Editor
         // Obtenemos una referencia al script GameController
         GameManager gameController = (GameManager)target;
 
-        // Añadimos un botón para generar las notas del jugador
+        // Aï¿½adimos un botï¿½n para generar las notas del jugador
         if (GUILayout.Button("Generate Notes"))
         {
             gameController.GenerateNotes();
         }
 
-        // Añadimos un botón para generar las notas del enemigo
+        // Aï¿½adimos un botï¿½n para generar las notas del enemigo
         if (GUILayout.Button("Generate Enemy Notes"))
         {
             gameController.GenerateEnemyNotes();

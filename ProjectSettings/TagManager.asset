@@ -10,6 +10,7 @@ TagManager:
   - RightActivator
   - UpActivator
   - DownActivator
+  - Limit
   layers:
   - Default
   - TransparentFX

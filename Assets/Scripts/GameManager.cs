@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Pool;
@@ -10,6 +11,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public LongNoteObject[] longNotePrefab;
+    public Section sectionPrefab;
     public OpponentLongNoteObject opponentLongNotePrefab;
     public AudioSource song;
     public AudioSource voices;
@@ -74,8 +76,8 @@ public class GameManager : MonoBehaviour
         {
             ShowWinScreen();
         }
+        
     }
-
     void InitializeGame()
     {
         backButton.onClick.AddListener(BackButton);
@@ -97,7 +99,7 @@ public class GameManager : MonoBehaviour
         voices.time = 0;
         cameraAnimator = mainCamera.GetComponent<Animator>();
         InitializeScoreTexts();
-        InitializeImagePool();
+        InitializeImagePool(); 
         StartCoroutine(Countdown());
     }
 
@@ -148,36 +150,50 @@ public class GameManager : MonoBehaviour
     public void GenerateNotes()
     {
         playerNotes = NoteMapping.LoadFromFile(playerNotesFile).Notes;
+        int sectionSize = 100;
+        int noteCount = 0;
+        Section currentSection = null;
+
         foreach (Note note in playerNotes)
         {
+            if (noteCount % sectionSize == 0)
+            {
+                // Crear una nueva sección
+                currentSection = Instantiate(sectionPrefab,  BS.transform);
+                currentSection.activationTime = note.Time;
+                // Ajustar la posición de la sección a la misma altura que la primera nota
+                float adjustedTime = note.Time;
+                float initialPositionY = BS.speed * adjustedTime;
+                currentSection.transform.position = new Vector3(currentSection.transform.position.x, initialPositionY, currentSection.transform.position.z);
+            }
+
             if (note.Key >= 0 && note.Key < notePrefabs.Length)
             {
                 float adjustedTime = note.Time;
                 float initialPositionY = BS.speed * adjustedTime;
                 Vector3 spawnPosition = new Vector3(noteSpawnPoints[note.Key].position.x, initialPositionY, noteSpawnPoints[note.Key].position.z);
-                if(note.Duration != 0)
+
+                if (note.Duration != 0)
                 {
-                    LongNoteObject longNoteObject = Instantiate(longNotePrefab[note.Key],spawnPosition, Quaternion.identity, BS.transform);
+                    LongNoteObject longNoteObject = Instantiate(longNotePrefab[note.Key], spawnPosition, Quaternion.identity, currentSection.transform);
                     longNoteObject.time = adjustedTime;
                     longNoteObject.fallSpeed = BS.speed;
                     longNoteObject.duration = note.Duration;
                     longNoteObject.key = note.Key;
-                    // Asignar referencias de arrow y tail antes de inicializarlas
-                    longNoteObject.arrow = longNoteObject.GetComponentInChildren<ArrowNotePart>();
-                    longNoteObject.tail = longNoteObject.GetComponentInChildren<TailNotePart>();
 
                     longNoteObject.arrow.Initialize(note.Key, adjustedTime);
                     longNoteObject.tail.Initialize(note.Duration, BS.speed, note.Key);
+                    longNoteObject.gameObject.SetActive(false);
                 }
                 else
                 {
-                    NoteObject noteObject = Instantiate(notePrefabs[note.Key], spawnPosition, Quaternion.identity, BS.transform);
+                    NoteObject noteObject = Instantiate(notePrefabs[note.Key], spawnPosition, Quaternion.identity, currentSection.transform);
                     noteObject.key = note.Key;
                     noteObject.time = adjustedTime;
                     noteObject.offset = countdownSound1.length + countdownSound2.length + countdownSound3.length + introGo.length;
+                    noteObject.gameObject.SetActive(false);
                 }
-                
-                nextNoteIndex++;
+                noteCount++;
             }
             else
             {
@@ -186,19 +202,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     public void GenerateEnemyNotes()
     {
         opponentNotes = NoteMapping.LoadFromFile(opponentNotesFile).Notes;
+        int sectionSize = 100;
+        int noteCount = 0;
+        Section currentSection = null;
+
         foreach (Note note in opponentNotes)
         {
+            if (noteCount % sectionSize == 0)
+            {
+                // Crear una nueva sección
+                currentSection = Instantiate(sectionPrefab, BS.transform);
+                currentSection.activationTime = note.Time;
+                // Ajustar la posición de la sección a la misma altura que la primera nota
+                float adjustedTime = note.Time;
+                float initialPositionY = BS.speed * adjustedTime;
+                currentSection.transform.position = new Vector3(currentSection.transform.position.x, initialPositionY, currentSection.transform.position.z);
+            }
+
             if (note.Key >= 0 && note.Key < notePrefabs.Length)
             {
                 float adjustedTime = note.Time;
                 float initialPositionY = BS.speed * adjustedTime;
                 Vector3 spawnPosition = new Vector3(enemySpawnPoints[note.Key].position.x, initialPositionY, enemySpawnPoints[note.Key].position.z);
+
                 if (note.Duration != 0)
                 {
-                    OpponentLongNoteObject longNoteObject = Instantiate(opponentLongNotePrefab, spawnPosition, Quaternion.identity, BS.transform);
+                    OpponentLongNoteObject longNoteObject = Instantiate(opponentLongNotePrefab, spawnPosition, Quaternion.identity, currentSection.transform);
                     longNoteObject.fallSpeed = BS.speed;
                     longNoteObject.duration = note.Duration;
                     longNoteObject.key = note.Key;
@@ -209,12 +242,15 @@ public class GameManager : MonoBehaviour
 
                     longNoteObject.arrow.Initialize(note.Key, BS.speed);
                     longNoteObject.tail.Initialize(note.Duration, BS.speed, note.Key);
+                    longNoteObject.gameObject.SetActive(false);
                 }
                 else
                 {
-                    OpponentNoteObject noteObject = Instantiate(opponentNotePrefab, spawnPosition, Quaternion.identity, BS.transform);
+                    OpponentNoteObject noteObject = Instantiate(opponentNotePrefab, spawnPosition, Quaternion.identity, currentSection.transform);
                     noteObject.SetSprite(note.Key);
+                    noteObject.gameObject.SetActive(false);
                 }
+                noteCount++;
             }
             else
             {
@@ -277,13 +313,13 @@ public class GameManager : MonoBehaviour
     {
         currentScore += 100;
         comboCount++;
+        sicksCount++;
         playerHealth = Mathf.Clamp(playerHealth + 0.01f, 0, 1);
         playerIconPosition = Mathf.Clamp(playerIconPosition - 1f, -42, 50);
         enemyIconPosition = Mathf.Clamp(enemyIconPosition + 1f, -42, 50);
         ShowFeedbackImage("ShowPerfect");
         // Reproducir partículas en el botón correspondiente
         particleController.PlayParticles(buttonIndex);
-
 
     }
 
@@ -299,6 +335,7 @@ public class GameManager : MonoBehaviour
     public void HitNoteGood()
     {
         currentScore += 25;
+        goodsCount++;
         comboCount++;
         playerHealth = Mathf.Clamp(playerHealth + 0.01f, 0, 1);
         playerIconPosition = Mathf.Clamp(playerIconPosition - 1f, -42, 50);
@@ -323,7 +360,7 @@ public class GameManager : MonoBehaviour
     {
         currentScore += score;
     }
-   public void HandleFail()
+    public void HandleFail()
     {
         BoyFriendAnimator.SetTrigger("Fail");
         sfxSource.PlayOneShot(failSound);
@@ -368,7 +405,6 @@ public class GameManager : MonoBehaviour
         song.Stop();
         voices.Stop();
         BS.hasStarted = false;
-
         // Guardar los datos necesarios en PlayerPrefs
         PlayerPrefs.SetInt("Score", currentScore);
         PlayerPrefs.SetInt("Sicks", sicksCount);

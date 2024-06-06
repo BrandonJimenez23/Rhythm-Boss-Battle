@@ -68,8 +68,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void BackToMenu()
     {
-        // Vuelve al menú principal
+        // Vuelve al menï¿½ principal
         gameManager.BackToMenu();
-       
     }
 }
