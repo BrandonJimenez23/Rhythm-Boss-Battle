@@ -65,8 +65,7 @@ public class DeathScreenScript : MonoBehaviour
         // Yield until the animation is finished
         yield return new WaitForSeconds(playerAnimator.GetCurrentAnimatorStateInfo(0).length);
         AudioManager.Instance.RestoreVolumes();
-
         // Load the calling scene or your main scene if no scene name is saved
-        SceneManager.LoadScene(callingSceneName.Length > 0 ? callingSceneName : "Main"); // Replace "MainScene" with your actual scene name
+        SceneManager.LoadScene(callingSceneName.Length > 0 ? callingSceneName : "MainMenuScene"); // Replace "MainScene" with your actual scene name
     }
 }

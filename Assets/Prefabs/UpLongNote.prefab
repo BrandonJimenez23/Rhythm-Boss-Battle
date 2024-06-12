@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4911746000878854951}
   m_Layer: 0
   m_Name: LongArrowPart
-  m_TagString: Untagged
+  m_TagString: PlayerNote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.019042969, y: 21.965025}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 7132075606398399755}
   m_Layer: 0
   m_Name: ArrowPart
-  m_TagString: Untagged
+  m_TagString: PlayerNote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,7 +256,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 152, y: 155}
+  m_SizeDelta: {x: 159, y: 156}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!58 &622725486293575609
 CircleCollider2D:
@@ -287,7 +287,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b3a78ef56c92de747ab63744d83a9863, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7ef860e75440fe74bb7a6b3cd15227af, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

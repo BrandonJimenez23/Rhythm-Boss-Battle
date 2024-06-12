@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public LongNoteObject[] longNotePrefab;
     public Section sectionPrefab;
     public OpponentLongNoteObject opponentLongNotePrefab;
+    private DifficultySettings.Difficulty currentDifficulty;
+    private (float healthGain, float healthLoss, float playerIconMoveGain, float playerIconMoveLoss, float enemyIconMoveGain, float enemyIconMoveLoss) difficultySettings;
     public AudioSource song;
     public AudioSource voices;
     public AudioSource sfxSource;
@@ -59,12 +61,15 @@ public class GameManager : MonoBehaviour
     public ParticleController particleController;
     public Camera mainCamera;
     private Animator cameraAnimator;
+    private List<WeekProgress> weekProgressList;
     // Nombres de archivo JSON para notas del jugador y del oponente
     public string playerNotesFile;
     public string opponentNotesFile;
     public Button backButton;
+    private float songTimeCounter;
     void Start()
     {
+        SetDifficultySettings();
         InitializeGame();
         
     }
@@ -72,11 +77,18 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         UpdateUI();
-        if (!song.isPlaying && BS.hasStarted && playerHealth > 0 && !isPaused)
+        // Incrementar el contador de tiempo de la canción solo si está sonando
+        if (song.isPlaying)
+        {
+            songTimeCounter += Time.deltaTime;
+        }
+
+        // Verificar si la canción ha terminado
+        if (songTimeCounter >= song.clip.length)
         {
             ShowWinScreen();
         }
-        
+
     }
     void InitializeGame()
     {
@@ -102,7 +114,31 @@ public class GameManager : MonoBehaviour
         InitializeImagePool(); 
         StartCoroutine(Countdown());
     }
+    void SetDifficultySettings()
+    {
+        GameProgress gameProgress = ProgressManager.instance.gameProgress;
+        string currentLevel = PlayerPrefs.GetString("CurrentLevel");
+        weekProgressList = gameProgress.weeks;
+        foreach (var week in weekProgressList)
+        {
+            for (int i = 0; i< week.levels.Count; i++)
+            {
+                if (week.levels[i].levelName == currentLevel)
+                {
+                    
+                    if (System.Enum.TryParse(week.tracks[i].difficulty, out currentDifficulty))
+                    {
+                        difficultySettings = DifficultySettings.GetSettings(currentDifficulty);
+                    }
+                    else
+                    {
+                        Debug.LogError("Invalid difficulty setting: " + week.tracks[i].difficulty);
+                    }
+                }
+            }
 
+        }
+    }
     void InitializeScoreTexts()
     {
         Text scoreTextComponent = scoreText.GetComponent<Text>();
@@ -150,7 +186,7 @@ public class GameManager : MonoBehaviour
     public void GenerateNotes()
     {
         playerNotes = NoteMapping.LoadFromFile(playerNotesFile).Notes;
-        int sectionSize = 100;
+        int sectionSize = 50;
         int noteCount = 0;
         Section currentSection = null;
 
@@ -263,6 +299,7 @@ public class GameManager : MonoBehaviour
     {
         song.Play();
         voices.Play();
+        songTimeCounter = 0f;
         missesCount = 0;
         currentScore = 0;
     }
@@ -314,22 +351,16 @@ public class GameManager : MonoBehaviour
         currentScore += 100;
         comboCount++;
         sicksCount++;
-        playerHealth = Mathf.Clamp(playerHealth + 0.01f, 0, 1);
-        playerIconPosition = Mathf.Clamp(playerIconPosition - 1f, -42, 50);
-        enemyIconPosition = Mathf.Clamp(enemyIconPosition + 1f, -42, 50);
+        AdjustHealthAndIconPositions(difficultySettings.healthGain, difficultySettings.playerIconMoveGain, difficultySettings.enemyIconMoveGain);
         ShowFeedbackImage("ShowPerfect");
-        // Reproducir partículas en el botón correspondiente
         particleController.PlayParticles(buttonIndex);
-
     }
 
     public void HitNoteSick()
     {
         currentScore += 50;
         comboCount++;
-        playerHealth = Mathf.Clamp(playerHealth + 0.01f, 0, 1);
-        playerIconPosition = Mathf.Clamp(playerIconPosition - 1f, -42, 50);
-        enemyIconPosition = Mathf.Clamp(enemyIconPosition + 1f, -42, 50);
+        AdjustHealthAndIconPositions(difficultySettings.healthGain, difficultySettings.playerIconMoveGain, difficultySettings.enemyIconMoveGain);
     }
 
     public void HitNoteGood()
@@ -337,9 +368,7 @@ public class GameManager : MonoBehaviour
         currentScore += 25;
         goodsCount++;
         comboCount++;
-        playerHealth = Mathf.Clamp(playerHealth + 0.01f, 0, 1);
-        playerIconPosition = Mathf.Clamp(playerIconPosition - 1f, -42, 50);
-        enemyIconPosition = Mathf.Clamp(enemyIconPosition + 1f, -42, 50);
+        AdjustHealthAndIconPositions(difficultySettings.healthGain, difficultySettings.playerIconMoveGain, difficultySettings.enemyIconMoveGain);
         ShowFeedbackImage("ShowGood");
     }
 
@@ -348,12 +377,17 @@ public class GameManager : MonoBehaviour
         currentScore = Mathf.Max(currentScore - 10, 0);
         comboCount = 0;
         missesCount++;
-        enemyHealth = Mathf.Clamp(enemyHealth + 0.02f, 0, 1);
-        playerHealth = Mathf.Clamp(playerHealth - 0.02f, 0, 1);
-        playerIconPosition = Mathf.Clamp(playerIconPosition + 2f, -42, 50);
-        enemyIconPosition = Mathf.Clamp(enemyIconPosition - 2f, -42, 50);
+        AdjustHealthAndIconPositions(-difficultySettings.healthLoss, difficultySettings.playerIconMoveLoss, difficultySettings.enemyIconMoveLoss);
         ShowFeedbackImage("ShowBad");
         HandleFail();
+    }
+
+    private void AdjustHealthAndIconPositions(float healthAdjustment, float playerIconMove, float enemyIconMove)
+    {
+        playerHealth = Mathf.Clamp(playerHealth + healthAdjustment, 0, 1);
+        enemyHealth = Mathf.Clamp(enemyHealth - healthAdjustment, 0, 1); // Ajusta esto según la lógica de tu juego
+        playerIconPosition = Mathf.Clamp(playerIconPosition + playerIconMove, -42, 50);
+        enemyIconPosition = Mathf.Clamp(enemyIconPosition + enemyIconMove, -42, 50);
     }
 
     public void LongNoteScore(int score)
@@ -423,19 +457,19 @@ public class GameManager : MonoBehaviour
             GameObject imageObject = GetImageObjectFromPool();
             if (imageObject != null)
             {
-                // Obtener la referencia al contenedor de imágenes del combo
-                Image[] comboImages = imageObject.GetComponentsInChildren<Image>();
+                // Obtener la referencia al componente ComboImageReferences
+                ComboImageReferences comboRefs = imageObject.GetComponent<ComboImageReferences>();
 
-                if (comboImages != null && comboImages.Length >= 3)
+                if (comboRefs != null)
                 {
                     // Modificar las imágenes del combo para representar el contador actual
                     int hundreds = comboCount / 100;
                     int tens = (comboCount / 10) % 10;
                     int ones = comboCount % 10;
 
-                    comboImages[0].sprite = numberSprites[hundreds];
-                    comboImages[1].sprite = numberSprites[tens];
-                    comboImages[2].sprite = numberSprites[ones];
+                    comboRefs.hundredsImage.sprite = numberSprites[hundreds];
+                    comboRefs.tensImage.sprite = numberSprites[tens];
+                    comboRefs.onesImage.sprite = numberSprites[ones];
 
                     // Activar la animación
                     imageObject.GetComponent<Animator>().SetTrigger(trigger);
@@ -443,7 +477,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("Combo images not found or incomplete.");
+                    Debug.LogWarning("ComboImageReferences component not found.");
                 }
             }
         }

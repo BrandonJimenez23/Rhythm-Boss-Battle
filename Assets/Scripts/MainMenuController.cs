@@ -29,7 +29,7 @@ public class MainMenuController : MonoBehaviour
     private void OnPlayButtonClicked()
     {
         sfx.PlayOneShot(buttonClickSound);
-        StartCoroutine(WaitAndLoadScene("Level1"));
+        StartCoroutine(WaitAndLoadScene("LevelSelectionMenu"));
     }
 
     private void OnExitButtonClicked()

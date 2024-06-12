@@ -74,7 +74,7 @@ public class WinScreenManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("WeekSelectionScene");
+            SceneManager.LoadScene("LevelSelectionMenu");
         }
     }
 

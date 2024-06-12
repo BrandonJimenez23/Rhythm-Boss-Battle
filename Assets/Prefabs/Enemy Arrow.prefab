@@ -56,8 +56,8 @@ MonoBehaviour:
   arrowSprites:
   - {fileID: 21300000, guid: 03f8bbb5f0db6c240abae971a0f496e9, type: 3}
   - {fileID: 21300000, guid: 9ccb95a01d5be63448805ac7fd192219, type: 3}
-  - {fileID: 21300000, guid: 64bc71e3b1a3e0a49b27e99ae378cae6, type: 3}
-  - {fileID: 21300000, guid: daae28a10633b4840a257c40699ec07b, type: 3}
+  - {fileID: 21300000, guid: 7ef860e75440fe74bb7a6b3cd15227af, type: 3}
+  - {fileID: 21300000, guid: 55c78b135485b8b4fa6b8d9d8b6e5a7e, type: 3}
 --- !u!58 &-4035957170481771648
 CircleCollider2D:
   m_ObjectHideFlags: 0

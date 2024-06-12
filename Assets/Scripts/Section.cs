@@ -10,7 +10,7 @@ public class Section : MonoBehaviour
     private bool isActivated; // Indica si la sección ha sido activada
     private bool isActivatedNotified; // Indica si la sección ha sido notificada de su activación
     private AudioSource song;
-    public float activationOffset = 1f; // Offset de activación en segundos antes del tiempo de activación de la sección
+    public float activationOffset = 2f; // Offset de activación en segundos antes del tiempo de activación de la sección
 
     void Start()
     {

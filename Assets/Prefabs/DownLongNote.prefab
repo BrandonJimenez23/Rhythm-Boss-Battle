@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8665218760246682428}
   m_Layer: 0
   m_Name: ArrowPart
-  m_TagString: Untagged
+  m_TagString: PlayerNote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,7 +68,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1816172683211752688}
   m_Layer: 0
   m_Name: LongArrowPart
-  m_TagString: Untagged
+  m_TagString: PlayerNote
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,7 +236,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.019042969, y: 21.965025}

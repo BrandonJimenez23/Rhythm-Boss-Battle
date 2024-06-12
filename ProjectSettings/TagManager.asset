@@ -11,6 +11,7 @@ TagManager:
   - UpActivator
   - DownActivator
   - Limit
+  - PlayerNote
   layers:
   - Default
   - TransparentFX
