@@ -83,8 +83,8 @@ public class GameManager : MonoBehaviour
             songTimeCounter += Time.deltaTime;
         }
 
-        // Verificar si la canción ha terminado
-        if (songTimeCounter >= song.clip.length)
+        // Verificar si la canción ha terminado con un pequeño margen de error
+        if (songTimeCounter >= song.clip.length - 0.5f) // Puedes ajustar el margen según sea necesario
         {
             ShowWinScreen();
         }
