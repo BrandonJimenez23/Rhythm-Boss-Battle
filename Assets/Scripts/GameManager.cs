@@ -46,8 +46,6 @@ public class GameManager : MonoBehaviour
     public OpponentNoteObject opponentNotePrefab;
     private List<GameObject> imagePool;
     public NoteObject[] notePrefabs;
-    private int nextNoteIndex;
-    private int nextOppNoteIndex;
     private float playerIconPosition;
     private float enemyIconPosition;
     private bool isPaused;
@@ -98,8 +96,6 @@ public class GameManager : MonoBehaviour
         countdownSound3.LoadAudioData();
         failSound.LoadAudioData();
         introGo.LoadAudioData();
-        nextNoteIndex = 0;
-        nextOppNoteIndex = 0;
         isPaused = false;
         comboCount = 0;
         missesCount = 0;
