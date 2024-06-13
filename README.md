@@ -9,7 +9,7 @@ Rhythm Game is a 2D rhythm-based game developed in Unity. Players must hit the n
 - Unique Bosses and music
 
 ## Game Design Document
-To access the game design document, click [here](link_to_design_document).
+To access the game design document, click [here](https://docs.google.com/document/d/1QRYfU81FBlNTlYZMiQc1rtr-PH-84MkLw08unOhVPWI/edit?usp=sharing).
 
 ## User Manual
 To access the user manual, click [here](https://docs.google.com/document/d/1P5GVe16G_aGuNU0HwU7Or_7ep7b07gQ744Qa1-kLJXM/edit?usp=sharing).
