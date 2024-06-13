@@ -503,6 +503,7 @@ MonoBehaviour:
   trackListContainer: {fileID: 5839487387453213114}
   completionPercentageText: {fileID: 5993245602112616629}
   lockedOverlay: {fileID: 5509951742533325081}
+  scoreText: {fileID: 4711616042757763828}
   missesText: {fileID: 904425670201308885}
   sicksText: {fileID: 4603194413494654719}
   goodsText: {fileID: 1299138300928298200}

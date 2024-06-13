@@ -12,6 +12,7 @@ public class WeekUI : MonoBehaviour
     public TextMeshProUGUI completionPercentageText;
     public GameObject lockedOverlay;
     // New UI elements for showing stats and grade
+    public TextMeshProUGUI scoreText;
     public TextMeshProUGUI missesText;
     public TextMeshProUGUI sicksText;
     public TextMeshProUGUI goodsText;
@@ -107,6 +108,7 @@ public class WeekUI : MonoBehaviour
         int totalSicks = 0;
         int totalGoods = 0;
         int totalNotes = 0;
+        int totalScore = 0;
         int totalPlayedNotes = 0;
 
         foreach (var level in levels)
@@ -115,6 +117,7 @@ public class WeekUI : MonoBehaviour
             {
                 totalMisses += level.misses;
                 totalSicks += level.sicks;
+                totalScore += level.score;
                 totalGoods += level.goods;
                 totalPlayedNotes += level.sicks + level.goods + level.misses;
             }
@@ -127,6 +130,7 @@ public class WeekUI : MonoBehaviour
         missesText.text = $"Misses: {totalMisses}";
         sicksText.text = $"Sicks: {totalSicks}";
         goodsText.text = $"Goods: {totalGoods}";
+        scoreText.text = $"TOTAL SCORE \n {totalScore} ";
         gradeText.text = CalculateGrade(accuracy, sickAccuracy);
     }
 
