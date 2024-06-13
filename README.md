@@ -1,7 +1,7 @@
 # Rhythm Boos Battle
 
 ## Overview
-Rhythm Game is a 2D rhythm-based game developed in Unity. Players must hit the notes in time with the music to score points and progress through levels.
+Rhythm Game is a 2D rhythm-based game developed in Unity. Players must hit the notes in time with the music to score points and progress through levels. Rhythm Boss Battle is a vertical rhythm game that simulates piano keys. It is inspired by Friday Night Funkin', specifically a mod called Hex created by KadeDev.
 
 ## Features
 - Engaging rhythm-based gameplay
@@ -24,7 +24,7 @@ To access the user manual, click [here](link_to_user_manual).
 - [Linux](link_to_linux_executable)
 
 ## Video Demo 🎞️
-[![Video Demo](https://github.com/BrandonJimenez23/Rhythm-Boss-Battle/blob/main/img/video_thumbnail.jpg)](link_to_video_demo)
+[![Video Demo](https://github.com/BrandonJimenez23/Rhythm-Boss-Battle/blob/main/img/video_thumbnail.jpg)](https://drive.google.com/file/d/1xRMGPscEmPjHq-sRfPJjXdXvKDvY3Vs6/view?usp=sharing)
 
 ## TikTok de FOL
 To access the TikTok video, click [here](link_to_tiktok_video).
