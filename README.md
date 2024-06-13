@@ -20,8 +20,8 @@ To access the user manual, click [here](https://docs.google.com/document/d/1P5GV
 3. Run the executable file to start the game.
 
 ## Game Executables
-- [Windows](link_to_windows_executable)
-- [Linux](link_to_linux_executable)
+- [Windows](https://drive.google.com/file/d/1KNyF_V6F2QVn4dgxeN1ARBJN1CqNfzkb/view?usp=sharing)
+- [Linux](https://drive.google.com/file/d/1Rvs51poytyimkZxSSxUscsSm58G_Szkh/view?usp=sharing)
 
 ## Video Demo 🎞️
 [![Video Demo](https://github.com/BrandonJimenez23/Rhythm-Boss-Battle/blob/main/img/video_thumbnail.jpg)](https://drive.google.com/file/d/1xRMGPscEmPjHq-sRfPJjXdXvKDvY3Vs6/view?usp=sharing)
