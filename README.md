@@ -12,7 +12,7 @@ Rhythm Game is a 2D rhythm-based game developed in Unity. Players must hit the n
 To access the game design document, click [here](link_to_design_document).
 
 ## User Manual
-To access the user manual, click [here](link_to_user_manual).
+To access the user manual, click [here](https://docs.google.com/document/d/1P5GVe16G_aGuNU0HwU7Or_7ep7b07gQ744Qa1-kLJXM/edit?usp=sharing).
 
 ## Installation Instructions
 1. Download the appropriate executable for your operating system from the links below.
@@ -27,7 +27,7 @@ To access the user manual, click [here](link_to_user_manual).
 [![Video Demo](https://github.com/BrandonJimenez23/Rhythm-Boss-Battle/blob/main/img/video_thumbnail.jpg)](https://drive.google.com/file/d/1xRMGPscEmPjHq-sRfPJjXdXvKDvY3Vs6/view?usp=sharing)
 
 ## TikTok de FOL
-To access the TikTok video, click [here](link_to_tiktok_video).
+To access the TikTok video, click [here](https://drive.google.com/file/d/1SHB-oSVd50sFcO-JDTcuU-i6q-8vCxvK/view?usp=sharing).
 
 ## Technologies Used
 | Badge                                                                 | Description                                           |
